@@ -26,7 +26,7 @@ jobs:
           Start-Job -Name CSIProxy -ScriptBlock {
             Invoke-WebRequest https://github.com/andyzhangx/demo/raw/master/windows/csi-proxy-v1.0.0-rc.1.tar.gz -OutFile csi-proxy.tar.gz;
             tar -xvf csi-proxy.tar.gz
-            .\bin\csi-proxy.exe --kubelet-csi-plugins-path $pwd --kubelet-pod-path $pwd
+            .\bin\csi-proxy.exe --kubelet-path $pwd
           };
 
           Start-Sleep -Seconds 30;
