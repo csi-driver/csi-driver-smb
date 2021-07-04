@@ -26,11 +26,11 @@ import (
 	filepath "path/filepath"
 	"strings"
 
-	fs "github.com/kubernetes-csi/csi-proxy/client/api/filesystem/v1beta1"
-	fsclient "github.com/kubernetes-csi/csi-proxy/client/groups/filesystem/v1beta1"
+	fs "github.com/kubernetes-csi/csi-proxy/client/api/filesystem/v1"
+	fsclient "github.com/kubernetes-csi/csi-proxy/client/groups/filesystem/v1"
 
-	smb "github.com/kubernetes-csi/csi-proxy/client/api/smb/v1beta1"
-	smbclient "github.com/kubernetes-csi/csi-proxy/client/groups/smb/v1beta1"
+	smb "github.com/kubernetes-csi/csi-proxy/client/api/smb/v1"
+	smbclient "github.com/kubernetes-csi/csi-proxy/client/groups/smb/v1"
 
 	"k8s.io/klog/v2"
 	mount "k8s.io/mount-utils"
