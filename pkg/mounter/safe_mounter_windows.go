@@ -26,11 +26,11 @@ import (
 	filepath "path/filepath"
 	"strings"
 
-	fs "github.com/kubernetes-csi/csi-proxy/client/api/filesystem/v1beta1"
-	fsclient "github.com/kubernetes-csi/csi-proxy/client/groups/filesystem/v1beta1"
+	fs "github.com/kubernetes-csi/csi-proxy/client/api/filesystem/v1"
+	fsclient "github.com/kubernetes-csi/csi-proxy/client/groups/filesystem/v1"
 
-	smb "github.com/kubernetes-csi/csi-proxy/client/api/smb/v1beta1"
-	smbclient "github.com/kubernetes-csi/csi-proxy/client/groups/smb/v1beta1"
+	smb "github.com/kubernetes-csi/csi-proxy/client/api/smb/v1"
+	smbclient "github.com/kubernetes-csi/csi-proxy/client/groups/smb/v1"
 
 	"k8s.io/klog/v2"
 	mount "k8s.io/mount-utils"
@@ -110,11 +110,11 @@ func (mounter *CSIProxyMounter) Mount(source string, target string, fstype strin
 	klog.V(4).Infof("Mount: old name: %s. new name: %s", source, target)
 	// Mount is called after the format is done.
 	// TODO: Confirm that fstype is empty.
-	linkRequest := &fs.LinkPathRequest{
+	linkRequest := &fs.CreateSymlinkRequest{
 		SourcePath: normalizeWindowsPath(source),
 		TargetPath: normalizeWindowsPath(target),
 	}
-	_, err := mounter.FsClient.LinkPath(context.Background(), linkRequest)
+	_, err := mounter.FsClient.CreateSymlink(context.Background(), linkRequest)
 	if err != nil {
 		return err
 	}
@@ -132,9 +132,8 @@ func Split(r rune) bool {
 func (mounter *CSIProxyMounter) Rmdir(path string) error {
 	klog.V(4).Infof("Remove directory: %s", path)
 	rmdirRequest := &fs.RmdirRequest{
-		Path:    normalizeWindowsPath(path),
-		Context: fs.PathContext_POD,
-		Force:   true,
+		Path:  normalizeWindowsPath(path),
+		Force: true,
 	}
 	_, err := mounter.FsClient.Rmdir(context.Background(), rmdirRequest)
 	if err != nil {
@@ -170,14 +169,14 @@ func (mounter *CSIProxyMounter) IsLikelyNotMountPoint(path string) (bool, error)
 		return true, os.ErrNotExist
 	}
 
-	response, err := mounter.FsClient.IsMountPoint(context.Background(),
-		&fs.IsMountPointRequest{
+	response, err := mounter.FsClient.IsSymlink(context.Background(),
+		&fs.IsSymlinkRequest{
 			Path: normalizeWindowsPath(path),
 		})
 	if err != nil {
 		return false, err
 	}
-	return !response.IsMountPoint, nil
+	return !response.IsSymlink, nil
 }
 
 func (mounter *CSIProxyMounter) PathIsDevice(pathname string) (bool, error) {
@@ -206,8 +205,7 @@ func (mounter *CSIProxyMounter) MakeFile(pathname string) error {
 func (mounter *CSIProxyMounter) MakeDir(path string) error {
 	klog.V(4).Infof("Make directory: %s", path)
 	mkdirReq := &fs.MkdirRequest{
-		Path:    normalizeWindowsPath(path),
-		Context: fs.PathContext_PLUGIN,
+		Path: normalizeWindowsPath(path),
 	}
 	_, err := mounter.FsClient.Mkdir(context.Background(), mkdirReq)
 	if err != nil {

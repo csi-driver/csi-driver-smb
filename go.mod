@@ -10,7 +10,7 @@ require (
 	github.com/container-storage-interface/spec v1.3.0
 	github.com/golang/protobuf v1.4.3
 	github.com/kubernetes-csi/csi-lib-utils v0.7.0
-	github.com/kubernetes-csi/csi-proxy/client v0.2.2
+	github.com/kubernetes-csi/csi-proxy/client v1.0.0-rc.1
 	github.com/kubernetes-csi/external-snapshotter/v2 v2.0.0-20200617021606-4800ca72d403
 	github.com/onsi/ginkgo v1.11.0
 	github.com/onsi/gomega v1.7.1
@@ -160,11 +160,9 @@ replace (
 	github.com/gobwas/glob => github.com/gobwas/glob v0.2.3
 	github.com/godbus/dbus => github.com/godbus/dbus v0.0.0-20181101234600-2ff6f7ffd60f
 	github.com/godbus/dbus/v5 => github.com/godbus/dbus/v5 v5.0.3
-	github.com/gogo/protobuf => github.com/gogo/protobuf v1.3.1
 	github.com/golang/freetype => github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
 	github.com/golang/groupcache => github.com/golang/groupcache v0.0.0-20160516000752-02826c3e7903
 	github.com/golang/mock => github.com/golang/mock v1.3.1
-	github.com/golang/protobuf => github.com/golang/protobuf v1.3.5
 	github.com/golangci/check => github.com/golangci/check v0.0.0-20180506172741-cfe4005ccda2
 	github.com/golangci/dupl => github.com/golangci/dupl v0.0.0-20180902072040-3e9179ac440a
 	github.com/golangci/errcheck => github.com/golangci/errcheck v0.0.0-20181223084120-ef45e06d44b6

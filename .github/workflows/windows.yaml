@@ -24,9 +24,9 @@ jobs:
         run: |
           # start the CSI Proxy before running tests on windows
           Start-Job -Name CSIProxy -ScriptBlock {
-            Invoke-WebRequest https://kubernetesartifacts.azureedge.net/csi-proxy/v0.2.2/binaries/csi-proxy.tar.gz -OutFile csi-proxy.tar.gz;
+            Invoke-WebRequest https://github.com/andyzhangx/demo/raw/master/windows/csi-proxy-v1.0.0-rc.1.tar.gz -OutFile csi-proxy.tar.gz;
             tar -xvf csi-proxy.tar.gz
-            .\bin\csi-proxy.exe --kubelet-csi-plugins-path $pwd --kubelet-pod-path $pwd
+            .\bin\csi-proxy.exe --kubelet-path $pwd
           };
 
           Start-Sleep -Seconds 30;
